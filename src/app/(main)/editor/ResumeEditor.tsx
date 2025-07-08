@@ -1,10 +1,28 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import GeneralInfoForm from "./forms/GeneralInfoForm";
-import PersonalInfoForm from "./forms/PersonalInfoForm";
+// import GeneralInfoForm from "./forms/GeneralInfoForm";
+// import PersonalInfoForm from "./forms/PersonalInfoForm";
+import { useSearchParams } from "next/navigation";
+import { steps } from "./steps";
+import Breadcrumbs from "./Breadcrumbs";
+import Footer from "./Footer";
+import { useState } from "react";
 export default function ResumeEditor() {
+  const searchParams = useSearchParams();
+
+  const { resumeData, setResumeData } = useState<ResumeValues>({});
+  const currentStep = searchParams.get("step") || steps[0].key;
+
+  function setStep(key: string) {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("step", key);
+    window.history.pushState(null, "", `?${newSearchParams.toString()}`);
+  }
+
+  // COMMENT we use uppercase variable beacause, we're storing value in a component
+  const FormComponent = steps.find(
+    (step) => step.key === currentStep,
+  )?.component;
   return (
     <div className="flex grow flex-col">
       <header className="space-y-1.5 border-b px-3 py-5 text-center">
@@ -18,29 +36,22 @@ export default function ResumeEditor() {
 
       <main className="relative grow">
         <div className="absolute bottom-0 top-0 flex w-full">
-          <div className="w-full overflow-y-auto p-2 md:w-1/2">
-            <PersonalInfoForm />
+          <div className="w-full space-y-6 overflow-y-auto p-2 md:w-1/2">
+            {/* <PersonalInfoForm /> */}
+            <Breadcrumbs currentStep={currentStep} setCurrentStep={setStep} />
+            {FormComponent && (
+              <FormComponent
+                resumeData={resumeData}
+                setResumeData={setResumeData}
+              />
+            )}
           </div>
           <div className="grow md:border-r" />
           <div className="hidden w-1/2 md:flex">Right</div>
         </div>
       </main>
 
-      <footer className="w-full border-t px-3 py-5">
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2">
-          <div className="flex items-center gap-3">
-            <Button variant="secondary">Previous steps</Button>
-            <Button>Next step</Button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" asChild>
-              <Link href="/resumes">Close</Link>
-            </Button>
-            <p className="text-muted-foreground opacity-0">saving....</p>
-          </div>
-        </div>
-      </footer>
+      <Footer currentStep={currentStep} setCurrentStep={setStep} />
     </div>
   );
 }

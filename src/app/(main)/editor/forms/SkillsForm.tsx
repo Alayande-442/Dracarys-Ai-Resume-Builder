@@ -1,3 +1,13 @@
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { EditorFormProps } from "@/lib/types";
 import { skillsSchema, SkillsValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,6 +50,34 @@ export default function SkillsForm({
           Enter what you are goos at
         </p>
       </div>
+
+      <Form {...form}>
+        <FormField
+          control={form.control}
+          name="skills"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="sr-only">Skills</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder="React.js | Next.js | Node.js etc..."
+                  onChange={(e) => {
+                    const skills = e.target.value.split("|");
+                    field.onChange(skills);
+                  }}
+                />
+              </FormControl>
+
+              <FormDescription>
+                Separate your skills with{" "}
+                <span className="text-muted-foreground">Pipe</span>
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </Form>
     </div>
   );
 }

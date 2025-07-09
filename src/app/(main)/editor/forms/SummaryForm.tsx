@@ -1,3 +1,12 @@
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 import { EditorFormProps } from "@/lib/types";
 import { summarySchema, summaryValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,5 +37,35 @@ export default function SummaryForm({
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
 
-  return <div></div>;
+  return (
+    <div className="mx-auto max-w-xl space-y-6">
+      <div className="space-y-1.5 text-center">
+        <h2 className="text-2xl font-semibold">Professional Summary</h2>
+        <p className="text-sm text-muted-foreground">
+          write a short summary about your resume.
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form className="space-y-3">
+          <FormField
+            control={form.control}
+            name="summary"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="sr-only">Professional summary</FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Enter an engaging text about you."
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+    </div>
+  );
 }

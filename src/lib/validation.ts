@@ -1,5 +1,4 @@
 import { z } from "zod";
-// import { type ClassValue } from "clsx";
 
 export const optionalString = z.string().trim().optional().or(z.literal(""));
 
@@ -86,7 +85,7 @@ export const resumeSchema = z.object({
   ...summarySchema.shape,
 });
 
-export type ClassValue = Omit<z.infer<typeof resumeSchema>, "photo"> & {
+export type ResumeValues = Omit<z.infer<typeof resumeSchema>, "photo"> & {
   id?: string;
   photo?: File | string | null;
 };

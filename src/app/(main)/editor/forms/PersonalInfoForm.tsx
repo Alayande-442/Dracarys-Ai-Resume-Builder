@@ -20,7 +20,7 @@ export default function PersonalInfoForm({
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      firstName: resumeData.firtName || "",
+      firstName: resumeData.firstName || "",
       lastName: resumeData.lastName || "",
       jobTitle: resumeData.jobTitle || "",
       city: resumeData.city || "",

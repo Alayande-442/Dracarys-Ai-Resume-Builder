@@ -5,6 +5,7 @@ import useDimensions from "@/hooks/useDimensions";
 import Image from "next/image";
 import { formatDate } from "date-fns";
 import { Badge } from "./ui/badge";
+import { BorderStyles } from "@/app/(main)/editor/BorderStyleButton";
 
 interface ResumePreviewProps {
   resumeData: ResumeValues;
@@ -82,14 +83,29 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
           height={100}
           alt="Author"
           className="aspect-square object-cover"
+          style={{
+            borderRadius: borderStyle === BorderStyles.SQUARE ? "0px" : "",
+          }}
         />
       )}
       <div className="space-y-2.5">
         <div className="space-y-1.5">
-          <p className="text-3xl font-bold">
+          <p
+            className="text-3xl font-bold"
+            style={{
+              color: colorHex,
+            }}
+          >
             {firstName} {lastName}
           </p>
-          <p className="text-lg">{jobTitle}</p>
+          <p
+            className="text-lg"
+            style={{
+              color: colorHex,
+            }}
+          >
+            {jobTitle}
+          </p>
           <p className="text-sm text-muted-foreground">
             {city}, {country} — {email} | {phone}
           </p>
@@ -112,15 +128,27 @@ function PersonalInfoHeader({ resumeData }: ResumeSectionProps) {
 //COMMENT this contains the  COMMENT summary of the preview page COMMENT.
 
 function SummarySection({ resumeData }: ResumeSectionProps) {
-  const { summary } = resumeData;
+  const { summary, colorHex } = resumeData;
 
   if (!summary) return null;
 
   return (
     <>
-      <hr className="border-2" />
+      <hr
+        className="border-2"
+        style={{
+          borderColor: colorHex,
+        }}
+      />
       <div className="break-inside-avoid space-y-3">
-        <p className="text-lg font-semibold">Professional profile</p>
+        <p
+          className="text-lg font-semibold"
+          style={{
+            color: colorHex,
+          }}
+        >
+          Professional profile
+        </p>
         <div className="whitespace-pre-line text-sm">{summary}</div>
       </div>
     </>
@@ -130,7 +158,7 @@ function SummarySection({ resumeData }: ResumeSectionProps) {
 //COMMENT this contains the  COMMENT work experience of the preview page COMMENT.
 
 function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
-  const { workExperiences } = resumeData;
+  const { workExperiences, colorHex } = resumeData;
 
   const workExperiencesNotEmpty = workExperiences?.filter(
     (exp) => Object.values(exp).filter(Boolean).length > 0,
@@ -140,12 +168,29 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr className="border-2" />
+      <hr
+        className="border-2"
+        style={{
+          borderColor: colorHex,
+        }}
+      />
       <div className="space-y-3">
-        <p className="text-lg font-semibold">Work experience</p>
+        <p
+          className="text-lg font-semibold"
+          style={{
+            color: colorHex,
+          }}
+        >
+          Work experience
+        </p>
         {workExperiencesNotEmpty.map((exp, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
-            <div className="flex items-center justify-between text-sm font-semibold">
+            <div
+              className="flex items-center justify-between text-sm font-semibold"
+              style={{
+                color: colorHex,
+              }}
+            >
               <span>{exp.position}</span>
               {exp.startDate && (
                 <span>
@@ -164,7 +209,7 @@ function WorkExperienceSection({ resumeData }: ResumeSectionProps) {
 
 //COMMENT this contains the  COMMENT Education section of the preview page COMMENT.
 function EducationSection({ resumeData }: ResumeSectionProps) {
-  const { educations } = resumeData;
+  const { educations, colorHex } = resumeData;
 
   const educationsNotEmpty = (educations ?? []).filter(
     (edu): edu is NonNullable<typeof edu> =>
@@ -175,12 +220,29 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 
   return (
     <>
-      <hr className="border-2" />
+      <hr
+        className="border-2"
+        style={{
+          borderColor: colorHex,
+        }}
+      />
       <div className="space-y-3">
-        <p className="text-lg font-semibold">Education</p>
+        <p
+          className="text-lg font-semibold"
+          style={{
+            color: colorHex,
+          }}
+        >
+          Education
+        </p>
         {educationsNotEmpty.map((edu, index) => (
           <div key={index} className="break-inside-avoid space-y-1">
-            <div className="flex items-center justify-between text-sm font-semibold">
+            <div
+              className="flex items-center justify-between text-sm font-semibold"
+              style={{
+                color: colorHex,
+              }}
+            >
               <span>{edu.degree}</span>
               {edu.startDate && (
                 <span className="text-xs text-muted-foreground">
@@ -200,20 +262,35 @@ function EducationSection({ resumeData }: ResumeSectionProps) {
 
 //COMMENT this contains the  COMMENT Skills section of the preview page COMMENT.
 function SkillsSection({ resumeData }: ResumeSectionProps) {
-  const { skills } = resumeData;
+  const { skills, colorHex } = resumeData;
 
   if (!skills?.length) return null;
 
   return (
     <>
-      <hr className="border-2" />
+      <hr
+        className="border-2"
+        style={{
+          borderColor: colorHex,
+        }}
+      />
       <div className="break-inside-avoid space-y-3">
-        <p className="text-lg font-semibold">Skills</p>
+        <p
+          className="text-lg font-semibold"
+          style={{
+            color: colorHex,
+          }}
+        >
+          Skills
+        </p>
         <div className="flex break-inside-avoid flex-wrap gap-2">
           {skills.map((skills, index) => (
             <Badge
               key={index}
               className="rounded-md bg-black text-white hover:bg-black"
+              style={{
+                backgroundColor: colorHex,
+              }}
             >
               {skills}
             </Badge>

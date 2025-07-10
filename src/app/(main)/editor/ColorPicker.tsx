@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { PopoverContent } from "@/components/ui/popover";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { PaletteIcon } from "lucide-react";
 import { useState } from "react";
-import { Color, ColorChangeHandler } from "react-color";
+import { Color, ColorChangeHandler, TwitterPicker } from "react-color";
 
 interface colorPickerProps {
   color: Color | undefined;
@@ -23,6 +24,12 @@ export default function ColorPicker({ color, onChange }: colorPickerProps) {
           <PaletteIcon className="size-5" />
         </Button>
       </PopoverTrigger>
+      <PopoverContent
+        className="border-none bg-transparent shadow-none"
+        align="end"
+      >
+        <TwitterPicker color={color} onChange={onChange} triangle="top-right" />
+      </PopoverContent>
     </Popover>
   );
 }

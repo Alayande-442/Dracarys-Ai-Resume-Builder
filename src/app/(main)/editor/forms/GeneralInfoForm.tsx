@@ -22,11 +22,10 @@ export default function GeneralInfoForm({
   const form = useForm<GeneralInfoValues>({
     resolver: zodResolver(generalInfoSchema),
     defaultValues: {
-      title: resumeData.title || "",
-      description: resumeData.description || "",
+      title: resumeData?.title ?? "",
+      description: resumeData?.description ?? "",
     },
   });
-
   //   COMMENT to watch the form when User unput value
   useEffect(() => {
     const { unsubscribe } = form.watch(async (values) => {

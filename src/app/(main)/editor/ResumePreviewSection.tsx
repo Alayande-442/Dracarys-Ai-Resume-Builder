@@ -5,7 +5,7 @@ import BorderStyleButton from "./BorderStyleButton";
 import { cn } from "../../../lib/utils";
 
 interface ResumePreviewSectionProps {
-  resumeData: ResumeValues;
+  resumeData?: ResumeValues; // 👈 Make optional to reflect reality
   setResumeData: (data: ResumeValues) => void;
   className?: string;
 }
@@ -15,6 +15,16 @@ export default function ResumePreviewSection({
   setResumeData,
   className,
 }: ResumePreviewSectionProps) {
+  if (!resumeData) {
+    return (
+      <div className={cn("hidden w-full md:flex md:w-1/2", className)}>
+        <p className="m-auto text-sm text-muted-foreground">
+          Loading preview...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn("group relative hidden w-full md:flex md:w-1/2", className)}

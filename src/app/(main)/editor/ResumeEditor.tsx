@@ -1,6 +1,6 @@
 "use client";
 
-// import useUnloadWarning from "@/hooks/useUnloadWarning";
+import useUnloadWarning from "@/hooks/useUnloadWarning";
 import { ResumeServerData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ResumeValues } from "@/lib/validation";
@@ -11,7 +11,7 @@ import Footer from "./Footer";
 // import ResumePreviewSection from "./ResumePreviewSection";
 import { steps } from "./steps";
 import ResumePreviewSection from "./ResumePreviewSection";
-// import useAutoSaveResume from "./useAutoSaveResume";
+import useAutoSaveResume from "./useAutoSaveResume";
 
 interface ResumeEditorProps {
   resumeToEdit: ResumeServerData | null;
@@ -25,9 +25,11 @@ export default function ResumeEditor({ resumeToEdit }: ResumeEditorProps) {
 
   const [showSmResumePreview, setShowSmResumePreview] = useState(false);
 
-  // const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
+  // COMMENT calling the Auto save hook
 
-  // useUnloadWarning(hasUnsavedChanges);
+  const { isSaving, hasUnsavedChanges } = useAutoSaveResume(resumeData);
+
+  useUnloadWarning(hasUnsavedChanges);
 
   const currentStep = searchParams.get("step") || steps[0].key;
 
